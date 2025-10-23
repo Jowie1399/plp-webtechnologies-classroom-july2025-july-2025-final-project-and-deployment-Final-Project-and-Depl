@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MySite — Home</title>
+  <meta name="description" content="Multipage demo site: Home page with slider, responsive layout, and JS interactivity." />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">MySite</a>
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+      <nav id="main-nav" class="nav" role="navigation" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <!-- HERO / SLIDER -->
+    <section class="hero" aria-label="Featured">
+      <div class="slider" id="slider" aria-live="polite">
+        <div class="slides">
+          <div class="slide active">
+            <img src="https://via.placeholder.com/1200x500.png?text=Slide+1" alt="Slide 1 - sample image">
+            <div class="slide-caption">
+              <h2>Welcome to MySite</h2>
+              <p>Responsive multipage site demo with slider & custom validation.</p>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="https://via.placeholder.com/1200x500.png?text=Slide+2" alt="Slide 2 - sample image">
+            <div class="slide-caption">
+              <h2>Modern HTML & CSS</h2>
+              <p>Semantic HTML5, CSS3, and accessible markup.</p>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="https://via.placeholder.com/1200x500.png?text=Slide+3" alt="Slide 3 - sample image">
+            <div class="slide-caption">
+              <h2>Interactive JavaScript</h2>
+              <p>Form validation, mobile nav and slider controlled by JS.</p>
+            </div>
+          </div>
+        </div>
+
+        <button class="slider-btn prev" id="prev-slide" aria-label="Previous slide">&#10094;</button>
+        <button class="slider-btn next" id="next-slide" aria-label="Next slide">&#10095;</button>
+
+        <div class="slider-indicators" id="slider-indicators" aria-hidden="false"></div>
+      </div>
+    </section>
+
+    <!-- FEATURES GRID -->
+    <section class="features" aria-labelledby="features-heading">
+      <h2 id="features-heading">Features</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Responsive</h3>
+          <p>Layouts that adapt to phones, tablets and desktops using CSS Grid & Flexbox.</p>
+        </article>
+
+        <article class="card">
+          <h3>Accessible</h3>
+          <p>Skip links, semantic elements, alt text, and considerate focus states.</p>
+        </article>
+
+        <article class="card">
+          <h3>Interactive</h3>
+          <p>Custom JavaScript for sliders, mobile nav and form validation.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 MySite — Multipage demo. <a href="contact.html">Get in touch</a></p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
