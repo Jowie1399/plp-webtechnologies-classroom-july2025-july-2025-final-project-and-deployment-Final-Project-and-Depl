@@ -1,0 +1,178 @@
+/* script.js
+   Multipage multipage-site demo
+   - Image slider (auto + manual)
+   - Mobile nav toggle (accessible)
+   - Custom form validation on contact page (no HTML built-in messages)
+   - Comments explain sections & functions
+*/
+
+/* --------------------------
+   Slider: initialize and control slides
+   -------------------------- */
+(function SliderModule() {
+  const slider = document.getElementById('slider');
+  if (!slider) return; // pages without slider skip
+
+  const slides = Array.from(slider.querySelectorAll('.slide'));
+  const prevBtn = document.getElementById('prev-slide');
+  const nextBtn = document.getElementById('next-slide');
+  const indicatorsWrap = document.getElementById('slider-indicators');
+
+  let current = 0;
+  let autoTimer = null;
+  const AUTO_DELAY = 5000; // 5s
+
+  // create indicators
+  slides.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    btn.addEventListener('click', () => goTo(i));
+    indicatorsWrap.appendChild(btn);
+  });
+  const indicators = Array.from(indicatorsWrap.children);
+
+  function update() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === current));
+    indicators.forEach((b, i) => b.classList.toggle('active', i === current));
+  }
+
+  function goTo(index) {
+    current = (index + slides.length) % slides.length;
+    update();
+    resetTimer();
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function startTimer() {
+    stopTimer();
+    autoTimer = setInterval(next, AUTO_DELAY);
+  }
+
+  function stopTimer() {
+    if (autoTimer) {
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+  }
+
+  function resetTimer() {
+    startTimer();
+  }
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+  slider.addEventListener('mouseenter', stopTimer);
+  slider.addEventListener('mouseleave', startTimer);
+
+  // keyboard accessibility
+  slider.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') prev();
+    if (e.key === 'ArrowRight') next();
+  });
+
+  // init
+  update();
+  startTimer();
+})();
+
+/* --------------------------
+   Mobile nav toggles
+   - There are three nav toggles (one on each page) with different IDs.
+   - Behavior is the same: toggle aria-expanded and show/hide .nav
+   -------------------------- */
+(function MobileNav() {
+  const toggles = [
+    { btnId: 'nav-toggle', navId: 'main-nav' },
+    { btnId: 'nav-toggle-2', navId: 'main-nav-2' },
+    { btnId: 'nav-toggle-3', navId: 'main-nav-3' }
+  ];
+
+  toggles.forEach(pair => {
+    const btn = document.getElementById(pair.btnId);
+    const nav = document.getElementById(pair.navId);
+    if (!btn || !nav) return;
+
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      // toggling a class makes the CSS show/hide the nav (CSS shows .nav by breakpoint)
+      nav.style.display = open ? '' : 'block';
+    });
+  });
+})();
+
+/* --------------------------
+   Contact form: custom validation (contact.html)
+   - Uses JS to validate fields and show error messages
+   - Prevents submit if invalid; shows success message
+   -------------------------- */
+(function ContactValidation() {
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+
+  const fullName = document.getElementById('fullName');
+  const email = document.getElementById('emailAddress');
+  const message = document.getElementById('message');
+  const feedback = document.getElementById('form-feedback');
+
+  function clearErrors() {
+    form.querySelectorAll('.error').forEach(el => el.textContent = '');
+    feedback.textContent = '';
+  }
+
+  function showError(fieldId, msg) {
+    const el = document.getElementById('error-' + fieldId);
+    if (el) el.textContent = msg;
+  }
+
+  function validEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(v);
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearErrors();
+
+    let valid = true;
+    const nameVal = fullName.value.trim();
+    const emailVal = email.value.trim();
+    const msgVal = message.value.trim();
+
+    if (!nameVal || nameVal.length < 2) {
+      showError('fullName', 'Please enter your name (2+ characters).');
+      valid = false;
+    }
+    if (!emailVal || !validEmail(emailVal)) {
+      showError('emailAddress', 'Please enter a valid email address.');
+      valid = false;
+    }
+    if (!msgVal || msgVal.length < 10) {
+      showError('message', 'Please enter a message (10+ characters).');
+      valid = false;
+    }
+
+    if (!valid) {
+      feedback.textContent = 'Please correct the errors and try again.';
+      feedback.style.color = '#b00020';
+      return;
+    }
+
+    // Simulate successful submission
+    feedback.textContent = 'Message sent successfully! (demo)';
+    feedback.style.color = 'green';
+
+    // Clear form after success
+    form.reset();
+  });
+
+  // optional: live inline validation
+  fullName.addEventListener('input', () => {
+    if (fullName.value.trim().length >= 2) {
+      document.getElementById('error-fullName').textContent = '';
+    }
+  });
+})();
+
+/* End of script.js */
