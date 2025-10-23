@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MySite — Contact</title>
+  <meta name="description" content="Contact page with custom JavaScript validation." />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">MySite</a>
+      <button id="nav-toggle-3" class="nav-toggle" aria-expanded="false" aria-controls="main-nav-3">Menu</button>
+      <nav id="main-nav-3" class="nav" role="navigation" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="contact" aria-labelledby="contact-heading">
+      <h1 id="contact-heading">Contact Us</h1>
+      <p>Use the form below. Custom validation prevents invalid submissions (handled by JS).</p>
+
+      <form id="contact-form" novalidate>
+        <div class="form-row">
+          <label for="fullName">Full name</label>
+          <input id="fullName" name="fullName" type="text" placeholder="Jane Doe" autocomplete="name">
+          <div class="error" id="error-fullName" aria-live="polite"></div>
+        </div>
+
+        <div class="form-row">
+          <label for="emailAddress">Email</label>
+          <input id="emailAddress" name="emailAddress" type="email" placeholder="name@example.com" autocomplete="email">
+          <div class="error" id="error-emailAddress" aria-live="polite"></div>
+        </div>
+
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="How can we help?"></textarea>
+          <div class="error" id="error-message" aria-live="polite"></div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit">Send message</button>
+          <button type="reset">Reset</button>
+        </div>
+
+        <div id="form-feedback" class="form-feedback" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 MySite</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
